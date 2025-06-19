@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSharePro | Earn by Sharing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #2A0A4A;
+            --accent-blue: #00F5FF;
+            --accent-pink: #FF00AA;
+            --text-light: #E0E0E0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0F0524 0%, #1A0A3A 100%);
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-blue);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+        }
+        
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.8);
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 60px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: rgba(42, 10, 74, 0.5);
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            border-radius: 10px;
+            padding: 30px;
+            width: 250px;
+            text-align: center;
+            margin: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 245, 255, 0.2);
+        }
+        
+        .stat-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-blue);
+            font-size: 36px;
+            margin: 10px 0;
+        }
+        
+        .how-it-works {
+            margin: 80px 0;
+        }
+        
+        .how-it-works h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 36px;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--accent-blue);
+        }
+        
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            margin: 15px;
+            padding: 25px;
+            background: rgba(42, 10, 74, 0.3);
+            border-radius: 10px;
+            border-left: 3px solid var(--accent-pink);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--accent-blue);
+            color: var(--primary-dark);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+            margin-top: 60px;
+        }
+        
+        footer p {
+            margin: 10px 0;
+        }
+        
+        .footer-links a {
+            color: var(--text-light);
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent-blue);
+        }
+        
+        /* Animation effects */
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">NetSharePro</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="withdraw.html">Withdraw</a>
+                <a href="terms.html">Terms</a>
+            </div>
+        </header>
+        
+        <section class="hero">
+            <h1>Earn Money by Sharing Your Internet</h1>
+            <p>Join thousands of users earning passive income by securely sharing their unused bandwidth. Start earning in just one click!</p>
+            <button class="cta-button" onclick="window.location.href='share.html'">Start Earning Now</button>
+        </section>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <p>Total Users</p>
+                <h3>24,589</h3>
+                <p>and growing</p>
+            </div>
+            <div class="stat-card">
+                <p>Total Paid</p>
+                <h3>₹8,742,156</h3>
+                <p>to our users</p>
+            </div>
+            <div class="stat-card">
+                <p>Avg. Earnings</p>
+                <h3>₹127</h3>
+                <p>per day</p>
+            </div>
+        </div>
+        
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <h3>Start Sharing</h3>
+                    <p>Click the button to begin sharing your unused internet bandwidth securely.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <h3>Earn Credits</h3>
+                    <p>Get paid for every MB of data shared through our decentralized network.</p>
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <h3>Withdraw Earnings</h3>
+                    <p>Cash out your earnings once you reach the minimum threshold.</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="withdraw.html">Withdraw</a>
+                <a href="terms.html">Terms</a>
+                <a href="#">Privacy</a>
+                <a href="#">Contact</a>
+            </div>
+            <p>&copy; 2023 NetSharePro. All rights reserved.</p>
+            <p class="pulse">Currently sharing: 2,458 nodes online</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Animate stats counting up
+        document.addEventListener('DOMContentLoaded', function() {
+            const stats = document.querySelectorAll('.stat-card h3');
+            const values = [24589, 8742156, 127];
+            const durations = [2000, 2500, 1500];
+            
+            stats.forEach((stat, index) => {
+                const end = values[index];
+                const duration = durations[index];
+                let start = 0;
+                const increment = end / (duration / 16);
+                
+                const timer = setInterval(() => {
+                    start += increment;
+                    if (start >= end) {
+                        stat.textContent = index === 1 ? '₹' + end.toLocaleString() : end.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = index === 1 ? '₹' + Math.floor(start).toLocaleString() : Math.floor(start).toLocaleString();
+                    }
+                }, 16);
+            });
+        });
+    </script>
+</body>
+</html>

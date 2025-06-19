@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSharePro | Active Sharing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Shared styles from index.html */
+        :root {
+            --primary-dark: #2A0A4A;
+            --accent-blue: #00F5FF;
+            --accent-pink: #FF00AA;
+            --text-light: #E0E0E0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0F0524 0%, #1A0A3A 100%);
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-blue);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+        
+        /* Sharing page specific styles */
+        .dashboard {
+            display: flex;
+            margin: 40px 0;
+        }
+        
+        .earnings-panel {
+            flex: 1;
+            background: rgba(42, 10, 74, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            margin-right: 20px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .activity-panel {
+            flex: 2;
+            background: rgba(42, 10, 74, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .panel-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-blue);
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.3);
+            padding-bottom: 10px;
+        }
+        
+        .balance {
+            font-size: 48px;
+            margin: 20px 0;
+            font-weight: bold;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .balance-label {
+            font-size: 16px;
+            color: rgba(224, 224, 224, 0.8);
+        }
+        
+        .withdraw-button {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .withdraw-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+        }
+        
+        .withdraw-button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            background: rgba(42, 10, 74, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-blue);
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: rgba(224, 224, 224, 0.7);
+        }
+        
+        .activity-log {
+            height: 300px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: monospace;
+        }
+        
+        .log-entry {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+        }
+        
+        .log-time {
+            color: var(--accent-blue);
+            font-size: 12px;
+        }
+        
+        .log-message {
+            margin-top: 3px;
+        }
+        
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #00FF47;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        .progress-container {
+            width: 100%;
+            background: rgba(0, 245, 255, 0.1);
+            border-radius: 10px;
+            height: 10px;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: right;
+            margin-top: 5px;
+            font-size: 12px;
+            color: rgba(224, 224, 224, 0.7);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">NetSharePro</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="withdraw.html">Withdraw</a>
+                <a href="terms.html">Terms</a>
+            </div>
+        </header>
+        
+        <div class="dashboard">
+            <div class="earnings-panel">
+                <div class="panel-title">Your Earnings</div>
+                <div class="balance-label">Current Balance</div>
+                <div class="balance" id="currentBalance">₹0.00</div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-label">Today's Earnings</div>
+                        <div class="stat-value" id="todayEarnings">₹0.00</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Shared</div>
+                        <div class="stat-value" id="totalShared">0 MB</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Session Time</div>
+                        <div class="stat-value" id="sessionTime">00:00:00</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Peak Speed</div>
+                        <div class="stat-value" id="peakSpeed">0 Mbps</div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar" id="withdrawProgress"></div>
+                    <div class="progress-text">Minimum withdrawal: ₹200.00</div>
+                </div>
+                
+                <button class="withdraw-button" id="withdrawBtn" disabled>Withdraw Earnings</button>
+            </div>
+            
+            <div class="activity-panel">
+                <div class="panel-title">Sharing Activity</div>
+                
+                <div class="status-indicator">
+                    <div class="status-dot"></div>
+                    <span>Active - Sharing your internet connection</span>
+                </div>
+                
+                <div class="activity-log" id="activityLog">
+                    <div class="log-entry">
+                        <div class="log-time">[10:23:45]</div>
+                        <div class="log-message">Session started. Initializing secure connection...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 NetSharePro. All rights reserved.</p>
+            <p class="pulse">Network stability: Excellent (98.7%)</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Simulate earnings growth
+        let balance = 0;
+        let todayEarnings = 0;
+        let sharedMB = 0;
+        let sessionSeconds = 0;
+        let peakSpeed = 0;
+        
+        // Format currency
+        function formatCurrency(amount) {
+            return '₹' + amount.toFixed(2);
+        }
+        
+        // Update UI
+        function updateUI() {
+            document.getElementById('currentBalance').textContent = formatCurrency(balance);
+            document.getElementById('todayEarnings').textContent = formatCurrency(todayEarnings);
+            document.getElementById('totalShared').textContent = sharedMB.toFixed(2) + ' MB';
+            
+            // Update withdraw button state
+            const withdrawBtn = document.getElementById('withdrawBtn');
+            if (balance >= 200) {
+                withdrawBtn.disabled = false;
+            } else {
+                withdrawBtn.disabled = true;
+            }
+            
+            // Update progress bar
+            const progressPercent = Math.min((balance / 200) * 100, 100);
+            document.getElementById('withdrawProgress').style.width = progressPercent + '%';
+        }
+        
+        // Format time
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const mins = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const secs = Math.floor(seconds % 60).toString().padStart(2, '0');
+            return `${hrs}:${mins}:${secs}`;
+        }
+        
+        // Add log entry
+        function addLogEntry(message) {
+            const now = new Date();
+            const timeString = `[${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}]`;
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.innerHTML = `
+                <div class="log-time">${timeString}</div>
+                <div class="log-message">${message}</div>
+            `;
+            
+            document.getElementById('activityLog').prepend(logEntry);
+        }
+        
+        // Simulate network activity
+        function simulateActivity() {
+            // Random earning increment (very small)
+            const increment = Math.random() * 0.02 + 0.01; // ₹0.01-0.03
+            balance += increment;
+            todayEarnings += increment;
+            
+            // Random MB shared
+            const mbIncrement = Math.random() * 0.5 + 0.1;
+            sharedMB += mbIncrement;
+            
+            // Update session time
+            sessionSeconds++;
+            document.getElementById('sessionTime').textContent = formatTime(sessionSeconds);
+            
+            // Occasionally update peak speed
+            if (Math.random() > 0.8) {
+                peakSpeed = Math.random() * 2 + 0.5;
+                document.getElementById('peakSpeed').textContent = peakSpeed.toFixed(2) + ' Mbps';
+            }
+            
+            // Occasionally add log entries
+            if (Math.random() > 0.7) {
+                const messages = [
+                    "Data packet routed through secure node",
+                    "Bandwidth allocation optimized",
+                    "Connection stability verified",
+                    "Earning credits for shared data",
+                    "Network throughput: " + (Math.random() * 2 + 0.5).toFixed(2) + " Mbps",
+                    "Secure tunnel maintained",
+                    "Data transfer completed"
+                ];
+                addLogEntry(messages[Math.floor(Math.random() * messages.length)]);
+            }
+            
+            updateUI();
+        }
+        
+        // Start simulation when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial UI update
+            updateUI();
+            
+            // Add initial log entries
+            addLogEntry("Secure connection established with NetSharePro network");
+            addLogEntry("Bandwidth sharing initialized at " + (Math.random() * 2 + 0.5).toFixed(2) + " Mbps");
+            addLogEntry("Starting to earn credits for shared bandwidth");
+            
+            // Start earning simulation
+            setInterval(simulateActivity, 3000); // Update every 3 seconds
+            
+            // Withdraw button handler
+            document.getElementById('withdrawBtn').addEventListener('click', function() {
+                if (balance >= 200) {
+                    window.location.href = 'withdraw.html';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

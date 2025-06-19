@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetSharePro | Withdraw Earnings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Shared styles from index.html */
+        :root {
+            --primary-dark: #2A0A4A;
+            --accent-blue: #00F5FF;
+            --accent-pink: #FF00AA;
+            --text-light: #E0E0E0;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0F0524 0%, #1A0A3A 100%);
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-blue);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+        }
+        
+        /* Withdrawal page specific styles */
+        .withdrawal-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: rgba(42, 10, 74, 0.5);
+            border-radius: 10px;
+            padding: 30px;
+            border: 1px solid rgba(0, 245, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .page-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            color: var(--accent-blue);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .balance-display {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .balance-label {
+            font-size: 18px;
+            color: rgba(224, 224, 224, 0.8);
+        }
+        
+        .balance-amount {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 5px;
+            color: var(--text-light);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 16px;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px rgba(0, 245, 255, 0.3);
+        }
+        
+        .submit-button {
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-pink));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.5);
+        }
+        
+        .withdrawal-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .info-title {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .processing-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .processing-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: var(--accent-blue);
+        }
+        
+        .processing-message {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 40px 0;
+        }
+        
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #00FF47;
+        }
+        
+        .success-message {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .continue-button {
+            background: var(--accent-blue);
+            color: var(--primary-dark);
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .continue-button:hover {
+            background: var(--accent-pink);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .spinner {
+            animation: spin 1.5s linear infinite;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">NetSharePro</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="share.html">Share</a>
+                <a href="terms.html">Terms</a>
+            </div>
+        </header>
+        
+        <div class="withdrawal-container">
+            <div id="withdrawalForm">
+                <h1 class="page-title">Withdraw Your Earnings</h1>
+                
+                <div class="balance-display">
+                    <div class="balance-label">Available Balance</div>
+                    <div class="balance-amount" id="withdrawBalance">₹0.00</div>
+                </div>
+                
+                <form id="withdrawalRequestForm">
+                    <div class="form-group">
+                        <label for="paymentMethod" class="form-label">Payment Method</label>
+                        <select id="paymentMethod" class="form-control" required>
+                            <option value="">Select payment method</option>
+                            <option value="paytm">Paytm</option>
+                            <option value="upi">UPI</option>
+                            <option value="bank">Bank Transfer</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group" id="upiField" style="display: none;">
+                        <label for="upiId" class="form-label">UPI ID</label>
+                        <input type="text" id="upiId" class="form-control" placeholder="yourname@upi">
+                    </div>
+                    
+                    <div class="form-group" id="paytmField" style="display: none;">
+                        <label for="paytmNumber" class="form-label">Paytm Number</label>
+                        <input type="text" id="paytmNumber" class="form-control" placeholder="10-digit mobile number">
+                    </div>
+                    
+                    <div class="form-group" id="bankFields" style="display: none;">
+                        <label for="accountNumber" class="form-label">Account Number</label>
+                        <input type="text" id="accountNumber" class="form-control" placeholder="Bank account number">
+                        
+                        <label for="ifscCode" class="form-label" style="margin-top: 15px;">IFSC Code</label>
+                        <input type="text" id="ifscCode" class="form-control" placeholder="Bank IFSC code">
+                        
+                        <label for="accountName" class="form-label" style="margin-top: 15px;">Account Holder Name</label>
+                        <input type="text" id="accountName" class="form-control" placeholder="As per bank records">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="withdrawAmount" class="form-label">Amount (Minimum ₹200)</label>
+                        <input type="number" id="withdrawAmount" class="form-control" min="200" step="1" required>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Request Withdrawal</button>
+                </form>
+                
+                <div class="withdrawal-info">
+                    <div class="info-title">Important Information</div>
+                    <p>Withdrawals are processed within 3-5 business days. A small processing fee may apply depending on your payment method.</p>
+                    <p>For security reasons, your first withdrawal may require additional verification.</p>
+                </div>
+            </div>
+            
+            <div class="processing-screen" id="processingScreen">
+                <div class="processing-icon">
+                    <div class="spinner">⚙️</div>
+                </div>
+                <div class="processing-message">Processing your withdrawal request...</div>
+            </div>
+            
+            <div class="success-screen" id="successScreen">
+                <div class="success-icon">✓</div>
+                <div class="success-message">Withdrawal request submitted successfully!</div>
+                <p>Your funds will be transferred within 3-5 business days.</p>
+                <button class="continue-button" onclick="window.location.href='share.html'">Continue Sharing</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2023 NetSharePro. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set balance from URL parameter or default to 200
+            const urlParams = new URLSearchParams(window.location.search);
+            const balance = parseFloat(urlParams.get('balance')) || 200;
+            document.getElementById('withdrawBalance').textContent = '₹' + balance.toFixed(2);
+            document.getElementById('withdrawAmount').value = balance.toFixed(2);
+            
+            // Show/hide payment method fields
+            document.getElementById('paymentMethod').addEventListener('change', function() {
+                const method = this.value;
+                
+                document.getElementById('upiField').style.display = 'none';
+                document.getElementById('paytmField').style.display = 'none';
+                document.getElementById('bankFields').style.display = 'none';
+                
+                if (method === 'upi') {
+                    document.getElementById('upiField').style.display = 'block';
+                } else if (method === 'paytm') {
+                    document.getElementById('paytmField').style.display = 'block';
+                } else if (method === 'bank') {
+                    document.getElementById('bankFields').style.display = 'block';
+                }
+            });
+            
+            // Form submission
+            document.getElementById('withdrawalRequestForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show processing screen
+                document.getElementById('withdrawalForm').style.display = 'none';
+                document.getElementById('processingScreen').style.display = 'block';
+                
+                // Simulate processing delay
+                setTimeout(function() {
+                    document.getElementById('processingScreen').style.display = 'none';
+                    document.getElementById('successScreen').style.display = 'block';
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
